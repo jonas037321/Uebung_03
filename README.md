@@ -1,6 +1,42 @@
 # Übung 03 – CNN mit Keras: Erkennung mit eigenen Bildern
 
-**INFI-IS · 5xHWII** · Aufgabenstellung: [`aufgabe_3__cnn.pdf`](aufgabe_3__cnn.pdf) · Stand: alle Kapitel 1–10 als Code fertig
+**INFI-IS · 5xHWII** · Aufgabenstellung: [`aufgabe_3__cnn.pdf`](aufgabe_3__cnn.pdf) · Stand: alle Kapitel 1–10 fertig,
+Datensatz aufgenommen, alle vier Modelle trainiert und ausgewertet
+
+---
+
+## Was dieses Projekt macht
+
+Das Projekt erkennt mit einem neuronalen Netz, welcher von drei Gegenständen vor der Webcam liegt:
+**Flasche, Handy oder Maus**. Es deckt den ganzen Weg von der Kamera bis zur Live-Vorhersage ab:
+
+1. **Bilder aufnehmen** – ein Assistent führt durch 7 Aufnahmeserien pro Klasse und speichert die Webcam-Bilder
+   in `rohbilder/` ([`capture_images.py`](capture_images.py)).
+2. **Daten aufteilen** – die Serien werden als Ganzes auf `train` / `validation` / `test` verteilt
+   ([`split_data.py`](split_data.py)).
+3. **Daten einlesen** – Keras lädt die Ordner als Datensätze mit 128×128 Pixeln ([`load_data.py`](load_data.py)).
+4. **Modelle trainieren** – vier Varianten: eigenes CNN, eigenes CNN mit Data Augmentation, Transfer Learning mit
+   MobileNetV2 und Transfer Learning mit Fine-Tuning ([`train_cnn.py`](train_cnn.py),
+   [`transfer_learning.py`](transfer_learning.py)).
+5. **Auswerten und vergleichen** – Lernkurven, Konfusionsmatrix, Beispielbilder und eine Vergleichstabelle
+   entstehen automatisch in `out/` ([`training.py`](training.py)).
+6. **Vorhersagen** – für Bilddateien oder live im Kamerabild ([`predict.py`](predict.py)).
+
+Im Repository liegen neben dem Code auch der aufgenommene Datensatz (`rohbilder/`, `data/`), die trainierten
+Modelle (`out/modelle/*.keras`) und alle Auswertungen. Man kann also sofort `python predict.py --kamera` starten,
+ohne vorher selbst zu trainieren.
+
+### Ergebnis in Kürze
+
+| Variante                                   | trainierte Parameter | Acc. train | Acc. validation | Acc. test | spätere Testbilder |
+|--------------------------------------------|---------------------:|-----------:|----------------:|----------:|-------------------:|
+| Eigenes CNN                                | 105.891              | 78,6 %     | 76,2 %          | 70,1 %    | 75,6 %             |
+| Eigenes CNN + Data Augmentation            | 105.891              | 81,9 %     | 85,7 %          | 64,4 %    | 53,3 %             |
+| **Transfer Learning (MobileNetV2)**        | **3.843**            | 97,1 %     | 92,9 %          | **87,4 %**| **91,1 %**         |
+| Transfer Learning + Fine-Tuning            | 1.514.563            | 100,0 %    | 95,2 %          | 83,9 %    | 84,4 %             |
+
+Am besten funktioniert Transfer Learning mit eingefrorenem MobileNetV2. Details stehen im Abschnitt
+[Ergebnisse](#ergebnisse) und in [`out/vergleich.md`](out/vergleich.md).
 
 ---
 
@@ -275,9 +311,11 @@ augmentation = keras.Sequential([
 
 Weil jede Epoche andere Varianten der Bilder zeigt, lernt das Modell langsamer. Darum gibt es mehr Epochen
 (max. 120) und mehr Geduld beim Early Stopping (20). Der direkte Vergleich mit dem Modell aus Kapitel 5 steht in
-`out/vergleich.md`. Zu erwarten ist: Die Trainings-Accuracy sinkt etwas oder steigt langsamer, der Abstand
+`out/vergleich.md`. Zu erwarten wäre: Die Trainings-Accuracy sinkt etwas oder steigt langsamer, der Abstand
 zwischen den Trainings- und Validierungskurven wird kleiner (weniger Overfitting), und die Accuracy auf den
-späteren Testbildern steigt.
+späteren Testbildern steigt. Bei unserem Datensatz ist nur der erste Teil eingetreten: Die Validierungs-Accuracy
+stieg von 76,2 % auf 85,7 %, die Accuracy auf den späteren Testbildern fiel aber von 75,6 % auf 53,3 %
+(siehe [Ergebnisse](#ergebnisse)).
 
 ## Kapitel 8 – Vorhersage (Menü 10 bzw. `python predict.py`)
 
@@ -314,6 +352,81 @@ Klassennamen (z. B. `data/test`), wird zusätzlich richtig/falsch angezeigt.
   Lernrate 1e-5 weitertrainiert. BatchNorm bleibt eingefroren. In `out/transfer_finetuning/lernkurven.png`
   markiert eine gestrichelte Linie den Beginn des Fine-Tunings.
 * Trainingszeit und Anzahl der trainierten Parameter beider Phasen stehen neben dem eigenen CNN in `out/vergleich.md`.
+
+---
+
+## Ergebnisse
+
+### Datensatz
+
+Drei Klassen: `flasche`, `handy`, `maus`. Pro Klasse 7 Serien × 14 Bilder plus eine spätere Testserie mit 15 Bildern,
+insgesamt **339 Bilder** (480×480 JPEG).
+
+| Bereich      | Serien                       | Bilder pro Klasse | Bilder gesamt |
+|--------------|------------------------------|------------------:|--------------:|
+| `train`      | `serie_01` – `serie_05`      | 70                | 210           |
+| `validation` | `serie_06`                   | 14                | 42            |
+| `test`       | `serie_07` + `testserie_01`  | 29 (14 + 15)      | 87            |
+
+![Beispielbilder aus train, validation und test](out/beispielbilder.png)
+
+### Vergleich der vier Modelle
+
+| Variante                              | trainierte Parameter | Epochen | Trainingszeit | Acc. train | Acc. validation | Acc. test | Test: `serie_07` (42 Bilder) | Test: `testserie_01` (45 Bilder) |
+|---------------------------------------|---------------------:|--------:|--------------:|-----------:|----------------:|----------:|-----------------------------:|---------------------------------:|
+| Eigenes CNN                           | 105.891              | 41      | 13 s          | 78,6 %     | 76,2 %          | 70,1 %    | 64,3 %                       | 75,6 %                           |
+| Eigenes CNN + Data Augmentation       | 105.891              | 120     | 84 s          | 81,9 %     | 85,7 %          | 64,4 %    | 76,2 %                       | 53,3 %                           |
+| Transfer Learning (Feature Extractor) | 3.843                | 30      | 23 s          | 97,1 %     | 92,9 %          | 87,4 %    | 83,3 %                       | 91,1 %                           |
+| Transfer Learning + Fine-Tuning       | 1.514.563            | 60      | 63 s          | 100,0 %    | 95,2 %          | 83,9 %    | 83,3 %                       | 84,4 %                           |
+
+Richtig erkannte Testbilder pro Klasse (von je 29):
+
+| Variante                              | flasche | handy | maus |
+|---------------------------------------|--------:|------:|-----:|
+| Eigenes CNN                           | 21      | 16    | 24   |
+| Eigenes CNN + Data Augmentation       | 19      | 16    | 21   |
+| Transfer Learning (Feature Extractor) | 26      | 21    | 29   |
+| Transfer Learning + Fine-Tuning       | 26      | 19    | 28   |
+
+### Beobachtungen
+
+* **Das Handy ist die schwierigste Klasse.** Alle vier Modelle verwechseln es am häufigsten mit der Maus
+  (eigenes CNN: 13 von 29 Handy-Bildern als Maus erkannt). Beide sind dunkle, flache Gegenstände.
+* **Das eigene CNN lernt zu wenig.** Schon auf den Trainingsbildern erreicht es nur 78,6 %. Es lernt die Bilder also
+  nicht auswendig, sondern findet mit 210 Trainingsbildern keine ausreichend guten Merkmale. Das Early Stopping
+  hat nach 41 Epochen abgebrochen (beste Epoche 31), weil der Validierungs-Loss wieder stieg.
+* **Data Augmentation hat hier nicht geholfen.** Die Validierungs-Accuracy steigt zwar auf 85,7 %, auf den späteren
+  Testbildern fällt das Modell aber auf 53,3 %. Fast alle Flaschen der Testserie werden mit 84–99 % Sicherheit als
+  Maus erkannt. Das Modell ist also sehr sicher und liegt trotzdem falsch. Das Training lief außerdem die vollen
+  120 Epochen (beste Epoche 112) und war damit noch nicht fertig.
+* **Transfer Learning ist klar am besten**, mit nur 3.843 trainierten Parametern und 23 s Training. Es ist auch das
+  einzige Modell, das alle 29 Maus-Bilder richtig erkennt und auf den späteren Testbildern über 90 % kommt.
+* **Fine-Tuning verschlechtert das Ergebnis.** Die Trainings-Accuracy steigt auf 100 %, die Test-Accuracy sinkt von
+  87,4 % auf 83,9 %. Mit 1,5 Mio. freigegebenen Parametern und 210 Bildern passt sich das Netz zu stark an die
+  Trainingsbilder an.
+* **`serie_07` ist nicht leichter als die spätere Testserie.** Bei drei von vier Modellen ist die Accuracy auf den
+  späteren Testbildern gleich hoch oder höher. Die erwartete Lücke zwischen „gleiche Sitzung“ und „später“ zeigt sich
+  nur beim CNN mit Augmentation. Bei 42 bzw. 45 Bildern machen wenige Bilder allerdings schon mehrere
+  Prozentpunkte aus.
+
+### Lernkurven und Konfusionsmatrix
+
+| Eigenes CNN | Transfer Learning (Feature Extractor) |
+|---|---|
+| ![Lernkurven eigenes CNN](out/cnn/lernkurven.png) | ![Lernkurven Transfer Learning](out/transfer/lernkurven.png) |
+| ![Konfusionsmatrix eigenes CNN](out/cnn/konfusionsmatrix.png) | ![Konfusionsmatrix Transfer Learning](out/transfer/konfusionsmatrix.png) |
+
+Die Bilder der beiden anderen Varianten liegen in [`out/cnn_augmentation/`](out/cnn_augmentation) und
+[`out/transfer_finetuning/`](out/transfer_finetuning). Beispiele für richtige und falsche Vorhersagen des besten
+Modells:
+
+![Richtige und falsche Vorhersagen, Transfer Learning](out/transfer/beispiele_richtig_falsch.png)
+
+### Live-Test mit der Kamera
+
+In [`out/kamera_vorhersagen/`](out/kamera_vorhersagen) liegen 8 Bilder aus der Live-Vorhersage. Der Dateiname enthält
+die erkannte Klasse und die Wahrscheinlichkeit: Flasche und Handy wurden mit 0,99–1,00 erkannt, die Maus mit
+0,71–0,94.
 
 ---
 
@@ -370,13 +483,23 @@ eigenen Klassen zuzuordnen. Deshalb reichen wenige Bilder, das Training geht sch
 gegenüber neuen Hintergründen.
 
 **8. Welche Variante hat bei eurem Datensatz am besten funktioniert und welche Beobachtungen erklären das Ergebnis?**
-*Nach dem Training mit den Zahlen aus [`out/vergleich.md`](out/vergleich.md) ergänzen.* Erwartet wird (und so
-lässt sich die Antwort aufbauen): Transfer Learning erreicht die beste Accuracy, vor allem auf den späteren
-Testbildern, obwohl es nur einen Bruchteil der Parameter trainiert und am schnellsten konvergiert. Das eigene CNN
-ohne Augmentation zeigt das stärkste Overfitting (Trainings-Accuracy fast 100 %, späte Testbilder deutlich
-schlechter). Mit Augmentation wird der Abstand kleiner. Gründe: Der Datensatz ist zu klein, um robuste Merkmale
-von Grund auf zu lernen. ImageNet-Merkmale sind dagegen schon an Millionen unterschiedlicher Hintergründe und
-Lichtverhältnisse gewöhnt.
+Am besten war **Transfer Learning mit eingefrorenem MobileNetV2**: 87,4 % Test-Accuracy und 91,1 % auf den später
+aufgenommenen Testbildern, obwohl nur 3.843 Parameter trainiert wurden und das Training 23 s dauerte. Das eigene
+CNN kommt auf 70,1 %, mit Data Augmentation auf 64,4 % (alle Zahlen im Abschnitt [Ergebnisse](#ergebnisse)).
+
+Die Beobachtungen dazu:
+
+* Das eigene CNN erreicht schon im Training nur 78,6 %. 210 Trainingsbilder reichen nicht, um Merkmale von Grund
+  auf zu lernen, die Handy und Maus sicher trennen. Fast die Hälfte der Handy-Bilder wird als Maus erkannt.
+* Data Augmentation hat bei uns die Validierung verbessert (85,7 %), aber nicht die Generalisierung: Auf den
+  späteren Testbildern sinkt die Accuracy auf 53,3 %, und die Flaschen der Testserie werden mit bis zu 99 % als Maus
+  erkannt. Augmentation erzeugt eben keine neuen Hintergründe oder Exemplare, und das Modell war nach 120 Epochen
+  noch nicht fertig trainiert.
+* MobileNetV2 bringt Merkmale aus über einer Million ImageNet-Bildern mit, die schon viele Hintergründe und
+  Lichtverhältnisse gesehen haben. Der kleine neue Kopf kann kaum overfitten, darum liegen Trainings- und
+  Validierungskurve nahe beieinander.
+* Fine-Tuning war schlechter als der reine Feature Extractor (83,9 % statt 87,4 % im Test bei 100 % im Training).
+  Mit 1,5 Mio. freigegebenen Parametern passt sich das Netz zu stark an die wenigen Trainingsbilder an.
 
 ### Weiterführende Überlegung: Image Classification vs. Object Detection
 
