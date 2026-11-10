@@ -1,0 +1,69 @@
+{
+  "klassen": {
+    "flasche": {
+      "train": [
+        "serie_01",
+        "serie_02",
+        "serie_03",
+        "serie_04",
+        "serie_05"
+      ],
+      "validation": [
+        "serie_06"
+      ],
+      "test": [
+        "serie_07",
+        "testserie_01"
+      ]
+    },
+    "handy": {
+      "train": [
+        "serie_01",
+        "serie_02",
+        "serie_03",
+        "serie_04",
+        "serie_05"
+      ],
+      "validation": [
+        "serie_06"
+      ],
+      "test": [
+        "serie_07",
+        "testserie_01"
+      ]
+    },
+    "maus": {
+      "train": [
+        "serie_01",
+        "serie_02",
+        "serie_03",
+        "serie_04",
+        "serie_05"
+      ],
+      "validation": [
+        "serie_06"
+      ],
+      "test": [
+        "serie_07",
+        "testserie_01"
+      ]
+    }
+  },
+  "anzahl_bilder": {
+    "flasche": {
+      "train": 70,
+      "validation": 14,
+      "test": 29
+    },
+    "handy": {
+      "train": 70,
+      "validation": 14,
+      "test": 29
+    },
+    "maus": {
+      "train": 70,
+      "validation": 14,
+      "test": 29
+    }
+  }
+}

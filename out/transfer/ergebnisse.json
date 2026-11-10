@@ -1,0 +1,112 @@
+{
+  "variante": "transfer",
+  "titel": "Transfer Learning (MobileNetV2, Feature Extractor)",
+  "trainierbare_parameter": 3843,
+  "parameter_gesamt": 2261827,
+  "epochen": 30,
+  "beste_epoche": 29,
+  "trainingszeit_s": 23.2,
+  "accuracy": {
+    "train": 0.9714,
+    "validation": 0.9286,
+    "test": 0.8736
+  },
+  "test_nach_herkunft": {
+    "serie_07 (gleiche Sitzung)": {
+      "accuracy": 0.8333333333333334,
+      "bilder": 42
+    },
+    "spätere Testbilder (testserie_*)": {
+      "accuracy": 0.9111111111111111,
+      "bilder": 45
+    }
+  },
+  "konfusionsmatrix": [
+    [
+      26,
+      0,
+      3
+    ],
+    [
+      1,
+      21,
+      7
+    ],
+    [
+      0,
+      0,
+      29
+    ]
+  ],
+  "overfitting": "Kaum Overfitting: Trainings- und Validierungskurven verlaufen nahe beieinander (Abstand 1% in Epoche 29).",
+  "falsch_klassifiziert": [
+    {
+      "datei": "testserie_01__handy_testserie_01_008.jpg",
+      "ist": "handy",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.926
+    },
+    {
+      "datei": "serie_07__flasche_serie_07_001.jpg",
+      "ist": "flasche",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.871
+    },
+    {
+      "datei": "serie_07__flasche_serie_07_011.jpg",
+      "ist": "flasche",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.716
+    },
+    {
+      "datei": "serie_07__handy_serie_07_014.jpg",
+      "ist": "handy",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.619
+    },
+    {
+      "datei": "serie_07__handy_serie_07_006.jpg",
+      "ist": "handy",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.61
+    },
+    {
+      "datei": "testserie_01__handy_testserie_01_015.jpg",
+      "ist": "handy",
+      "erkannt": "flasche",
+      "wahrscheinlichkeit": 0.59
+    },
+    {
+      "datei": "serie_07__handy_serie_07_005.jpg",
+      "ist": "handy",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.586
+    },
+    {
+      "datei": "testserie_01__handy_testserie_01_011.jpg",
+      "ist": "handy",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.578
+    },
+    {
+      "datei": "serie_07__handy_serie_07_008.jpg",
+      "ist": "handy",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.556
+    },
+    {
+      "datei": "testserie_01__handy_testserie_01_009.jpg",
+      "ist": "handy",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.449
+    },
+    {
+      "datei": "serie_07__flasche_serie_07_007.jpg",
+      "ist": "flasche",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.445
+    }
+  ],
+  "basismodell": "MobileNetV2 (ImageNet)",
+  "eingefroren": true
+}

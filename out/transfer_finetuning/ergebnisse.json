@@ -1,0 +1,131 @@
+{
+  "variante": "transfer_finetuning",
+  "titel": "Transfer Learning + Fine-Tuning",
+  "trainierbare_parameter": 1514563,
+  "parameter_gesamt": 2261827,
+  "epochen": 60,
+  "beste_epoche": 58,
+  "trainingszeit_s": 63.0,
+  "accuracy": {
+    "train": 1.0,
+    "validation": 0.9524,
+    "test": 0.8391
+  },
+  "test_nach_herkunft": {
+    "serie_07 (gleiche Sitzung)": {
+      "accuracy": 0.8333333333333334,
+      "bilder": 42
+    },
+    "spätere Testbilder (testserie_*)": {
+      "accuracy": 0.8444444444444444,
+      "bilder": 45
+    }
+  },
+  "konfusionsmatrix": [
+    [
+      26,
+      0,
+      3
+    ],
+    [
+      0,
+      19,
+      10
+    ],
+    [
+      0,
+      1,
+      28
+    ]
+  ],
+  "overfitting": "Kaum Overfitting: Trainings- und Validierungskurven verlaufen nahe beieinander (Abstand 4% in Epoche 58).",
+  "falsch_klassifiziert": [
+    {
+      "datei": "serie_07__flasche_serie_07_001.jpg",
+      "ist": "flasche",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.975
+    },
+    {
+      "datei": "testserie_01__handy_testserie_01_008.jpg",
+      "ist": "handy",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.965
+    },
+    {
+      "datei": "testserie_01__handy_testserie_01_011.jpg",
+      "ist": "handy",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.899
+    },
+    {
+      "datei": "serie_07__flasche_serie_07_011.jpg",
+      "ist": "flasche",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.834
+    },
+    {
+      "datei": "testserie_01__handy_testserie_01_009.jpg",
+      "ist": "handy",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.806
+    },
+    {
+      "datei": "testserie_01__handy_testserie_01_013.jpg",
+      "ist": "handy",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.769
+    },
+    {
+      "datei": "testserie_01__handy_testserie_01_001.jpg",
+      "ist": "handy",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.759
+    },
+    {
+      "datei": "testserie_01__handy_testserie_01_007.jpg",
+      "ist": "handy",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.747
+    },
+    {
+      "datei": "testserie_01__handy_testserie_01_010.jpg",
+      "ist": "handy",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.713
+    },
+    {
+      "datei": "serie_07__handy_serie_07_006.jpg",
+      "ist": "handy",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.648
+    },
+    {
+      "datei": "serie_07__flasche_serie_07_007.jpg",
+      "ist": "flasche",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.63
+    },
+    {
+      "datei": "serie_07__handy_serie_07_003.jpg",
+      "ist": "handy",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.615
+    },
+    {
+      "datei": "serie_07__handy_serie_07_010.jpg",
+      "ist": "handy",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.58
+    },
+    {
+      "datei": "serie_07__maus_serie_07_006.jpg",
+      "ist": "maus",
+      "erkannt": "handy",
+      "wahrscheinlichkeit": 0.549
+    }
+  ],
+  "basismodell": "MobileNetV2 (ImageNet)",
+  "freigegebene_schichten": 30,
+  "trainierbare_parameter_phase1": 3843
+}

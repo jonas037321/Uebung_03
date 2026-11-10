@@ -1,0 +1,202 @@
+{
+  "variante": "cnn",
+  "titel": "Eigenes CNN",
+  "trainierbare_parameter": 105891,
+  "parameter_gesamt": 105891,
+  "epochen": 41,
+  "beste_epoche": 31,
+  "trainingszeit_s": 13.0,
+  "accuracy": {
+    "train": 0.7857,
+    "validation": 0.7619,
+    "test": 0.7011
+  },
+  "test_nach_herkunft": {
+    "serie_07 (gleiche Sitzung)": {
+      "accuracy": 0.6428571428571429,
+      "bilder": 42
+    },
+    "spätere Testbilder (testserie_*)": {
+      "accuracy": 0.7555555555555555,
+      "bilder": 45
+    }
+  },
+  "konfusionsmatrix": [
+    [
+      21,
+      5,
+      3
+    ],
+    [
+      0,
+      16,
+      13
+    ],
+    [
+      0,
+      5,
+      24
+    ]
+  ],
+  "overfitting": "Anzeichen für Overfitting: der Validierungs-Loss steigt nach Epoche 31 wieder an, während der Trainings-Loss weiter fällt.",
+  "falsch_klassifiziert": [
+    {
+      "datei": "serie_07__handy_serie_07_004.jpg",
+      "ist": "handy",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.774
+    },
+    {
+      "datei": "testserie_01__handy_testserie_01_007.jpg",
+      "ist": "handy",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.772
+    },
+    {
+      "datei": "serie_07__handy_serie_07_003.jpg",
+      "ist": "handy",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.756
+    },
+    {
+      "datei": "testserie_01__handy_testserie_01_009.jpg",
+      "ist": "handy",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.739
+    },
+    {
+      "datei": "serie_07__handy_serie_07_005.jpg",
+      "ist": "handy",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.732
+    },
+    {
+      "datei": "testserie_01__flasche_testserie_01_014.jpg",
+      "ist": "flasche",
+      "erkannt": "handy",
+      "wahrscheinlichkeit": 0.71
+    },
+    {
+      "datei": "serie_07__handy_serie_07_002.jpg",
+      "ist": "handy",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.682
+    },
+    {
+      "datei": "testserie_01__handy_testserie_01_010.jpg",
+      "ist": "handy",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.682
+    },
+    {
+      "datei": "serie_07__maus_serie_07_001.jpg",
+      "ist": "maus",
+      "erkannt": "handy",
+      "wahrscheinlichkeit": 0.658
+    },
+    {
+      "datei": "testserie_01__flasche_testserie_01_015.jpg",
+      "ist": "flasche",
+      "erkannt": "handy",
+      "wahrscheinlichkeit": 0.657
+    },
+    {
+      "datei": "serie_07__handy_serie_07_006.jpg",
+      "ist": "handy",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.636
+    },
+    {
+      "datei": "serie_07__handy_serie_07_010.jpg",
+      "ist": "handy",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.632
+    },
+    {
+      "datei": "serie_07__handy_serie_07_009.jpg",
+      "ist": "handy",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.63
+    },
+    {
+      "datei": "serie_07__maus_serie_07_008.jpg",
+      "ist": "maus",
+      "erkannt": "handy",
+      "wahrscheinlichkeit": 0.618
+    },
+    {
+      "datei": "serie_07__handy_serie_07_013.jpg",
+      "ist": "handy",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.599
+    },
+    {
+      "datei": "testserie_01__handy_testserie_01_008.jpg",
+      "ist": "handy",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.586
+    },
+    {
+      "datei": "testserie_01__flasche_testserie_01_013.jpg",
+      "ist": "flasche",
+      "erkannt": "handy",
+      "wahrscheinlichkeit": 0.581
+    },
+    {
+      "datei": "testserie_01__flasche_testserie_01_002.jpg",
+      "ist": "flasche",
+      "erkannt": "handy",
+      "wahrscheinlichkeit": 0.578
+    },
+    {
+      "datei": "serie_07__maus_serie_07_013.jpg",
+      "ist": "maus",
+      "erkannt": "handy",
+      "wahrscheinlichkeit": 0.569
+    },
+    {
+      "datei": "serie_07__maus_serie_07_009.jpg",
+      "ist": "maus",
+      "erkannt": "handy",
+      "wahrscheinlichkeit": 0.557
+    },
+    {
+      "datei": "serie_07__handy_serie_07_008.jpg",
+      "ist": "handy",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.552
+    },
+    {
+      "datei": "serie_07__maus_serie_07_007.jpg",
+      "ist": "maus",
+      "erkannt": "handy",
+      "wahrscheinlichkeit": 0.528
+    },
+    {
+      "datei": "testserie_01__flasche_testserie_01_003.jpg",
+      "ist": "flasche",
+      "erkannt": "handy",
+      "wahrscheinlichkeit": 0.519
+    },
+    {
+      "datei": "testserie_01__flasche_testserie_01_004.jpg",
+      "ist": "flasche",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.484
+    },
+    {
+      "datei": "serie_07__flasche_serie_07_001.jpg",
+      "ist": "flasche",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.473
+    },
+    {
+      "datei": "testserie_01__flasche_testserie_01_005.jpg",
+      "ist": "flasche",
+      "erkannt": "maus",
+      "wahrscheinlichkeit": 0.447
+    }
+  ],
+  "augmentation": false,
+  "spiegeln": true
+}
